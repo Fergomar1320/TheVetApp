@@ -67,11 +67,43 @@ fun VetNav(){
             }
         }
         composable ("registerInterface"){
-            registerInterface()
+            Column (
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                registerInterface (
+                    goBack = {
+                        navController.navigate("login")
+                    }
+                )
+            }
+        }
+        composable("addPet"){
+            Column (
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                addPet (
+                    goBack = {
+                        navController.navigate("homeInterface")
+                    }
+                )
+            }
         }
         composable("homeInterface"){
-            homeInterface()
+            Column (
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                homeInterface(
+                    newPet = {
+                        navController.navigate("addPet")
+                    },
+                    goBack = {
+                        navController.navigate("login")
+                    }
+                )
+            }
         }
+
+
     }
 }
 
@@ -84,8 +116,6 @@ fun login(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text("Welcome to the Vet App")
-
-
         Button(
             onClick = homeInterface
         ) {
@@ -101,25 +131,52 @@ fun login(
 
 @Composable
 fun registerInterface(
-
+    goBack: () -> Unit
 ){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text("This is the registration page")
+
+        Button(onClick = goBack) {
+            Text("Return")
+        }
     }
+
 }
 
 @Composable
-fun homeInterface(){
+fun homeInterface(
+    newPet: () -> Unit,
+    goBack: () -> Unit
+){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text ("This is the Home Page")
 
-        Button(
-            onClick = { /*TODO*/ }) {
+        Button(onClick = newPet) {
             Text("Register new Pet")
+        }
+        Button(onClick = goBack) {
+            Text("Log Out")
+        }
+    }
+}
+
+@Composable
+fun addPet(
+    goBack: () -> Unit
+){
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("This is the 'Register New Pet' page")
+        Button(onClick = goBack) {
+            Text("Return")
+        }
+        Button(onClick = { /*TODO*/ }) {
+            Text("Confirm")
         }
     }
 }
